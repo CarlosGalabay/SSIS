@@ -1,0 +1,72 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/16/2023 11:05:20 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PORT-SASF-017"
+  DTS:CreatorName="PORT-SASF-017\Desarrollo"
+  DTS:DTSID="{5345AA16-1852-4227-BC8B-01E20A779A71}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5035.3"
+  DTS:LocaleID="12298"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{8125BEF3-1393-4824-B477-C52CF43F0AAC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.proyectodb]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A6CFE659-B5B3-49F5-9183-CC696514C53A}"
+      DTS:ObjectName="localhost.proyectodb">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=proyectodb;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package-{A6CFE659-B5B3-49F5-9183-CC696514C53A}localhost.proyectodb;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Tarea Ejecutar SQL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{4C661B3B-252A-4DC8-B293-D65C55CF35EF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Tarea Ejecutar SQL"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A6CFE659-B5B3-49F5-9183-CC696514C53A}"
+          SQLTask:SqlStatementSource="delete from ResumenCliente;&#xA;&#xA;&#xA;insert into ResumenCliente(&#xA;&#x9;id_cliente, cantidad_facturas, monto_facturas&#xA;) &#xA;&#xA;&#xA;select cl.id as id_cliente,&#xA;j.cantidad_facturas,&#xA;i.total_factura&#xA;from Clientes cl&#xA;inner join&#xA;&#x9;(Select&#xA;&#x9;Count(*) as cantidad_facturas,&#xA;&#x9;c.id as id_cliente&#xA;&#x9;from Clientes c,&#xA;&#x9;Facturas f&#xA;&#x9;where c.id = f.id_cliente &#xA;&#x9;Group by c.id&#xA;&#x9;) j&#xA;on cl.id = j.id_cliente&#xA;inner join&#xA;&#x9;(Select&#xA;&#x9;sum(f.total) as total_factura,&#xA;&#x9;c.id as id_cliente&#xA;&#x9;from Clientes c,&#xA;&#x9;Facturas f&#xA;&#x9;where c.id = f.id_cliente &#xA;&#x9;Group by c.id&#xA;&#x9;) i&#xA;on cl.id = i.id_cliente" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Tarea Ejecutar SQL"
+          TopLeft="221,82" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
